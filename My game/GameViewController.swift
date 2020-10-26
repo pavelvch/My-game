@@ -10,12 +10,18 @@
 import SceneKit
 
 class GameViewController: UIViewController {
+    //MARK: - Outlets
+    let label = UILabel()
+    
     //MARK: - Properties
     var duration: TimeInterval = 5
     var score = 0
     var ship: SCNNode!
     
     //MARK: - Methods
+    func addLabel() {
+        
+    }
     func addShip () {
         // move ship to far position
         
@@ -35,7 +41,7 @@ class GameViewController: UIViewController {
         }
         
         // retrieve the SCNView
-        let scnView = self.view as! SCNView
+       // let scnView = self.view as! SCNView
         //add ship to the scene
         scnView.scene?.rootNode.addChildNode(ship)
     }
@@ -51,7 +57,7 @@ class GameViewController: UIViewController {
     // remove ship
     func removeShip() {
         // retrieve the SCNView
-        let scnView = self.view as! SCNView
+       // let scnView = self.view as! SCNView
         
         //remove ship
         scnView.scene?.rootNode.childNode(withName: "ship", recursively: true)?.removeFromParentNode()
@@ -94,7 +100,7 @@ class GameViewController: UIViewController {
         //ship.runAction(SCNAction.repeatForever(SCNAction.rotateBy(x: 0, y: 2, z: 0, duration: 1)))
         
         // retrieve the SCNView
-        let scnView = self.view as! SCNView
+        //let scnView = self.view as! SCNView
         
         // set the scene to the view
         scnView.scene = scene
@@ -125,7 +131,7 @@ class GameViewController: UIViewController {
     @objc
     func handleTap(_ gestureRecognize: UIGestureRecognizer) {
         // retrieve the SCNView
-        let scnView = self.view as! SCNView
+       // let scnView = self.view as! SCNView
         
         // check what nodes are tapped
         let p = gestureRecognize.location(in: scnView)
@@ -158,7 +164,11 @@ class GameViewController: UIViewController {
             SCNTransaction.commit()
         }
     }
-//    MARK: - Prop 2
+    //    MARK: - Computed Properites
+    var scnView: SCNView {
+        return self.view as! SCNView
+    }
+    
     override var shouldAutorotate: Bool {
         return true
     }
