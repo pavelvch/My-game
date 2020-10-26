@@ -1,6 +1,6 @@
 // 
 //  GameViewController.swift
-//  My game
+//  My game ver 1.0
 //
 //  Created by Павел Вычик on 23.10.2020.
 //
@@ -10,12 +10,41 @@
 import SceneKit
 
 class GameViewController: UIViewController {
-
+    //MARK: - Properties
+    var ship: SCNNode!
+    
+    //MARK: - Methods
+    func addShip () {
+        // retrieve the SCNView
+        let scnView = self.view as! SCNView
+        //add ship to the scene
+        scnView.scene?.rootNode.addChildNode(ship)
+    }
+    
+    func getShip() -> SCNNode {
+        // получаем корабль,  получаем сцену
+        let scene = SCNScene(named: "art.scnassets/ship.scn")!
+        //retrieve the ship node
+        let ship = scene.rootNode.childNode(withName: "ship", recursively: true)!.clone()
+        return ship
+    }
+    
+    // remove ship
+    func removeShip() {
+        // retrieve the SCNView
+        let scnView = self.view as! SCNView
+        
+        //remove ship
+        scnView.scene?.rootNode.childNode(withName: "ship", recursively: true)?.removeFromParentNode()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // create a new scene
         let scene = SCNScene(named: "art.scnassets/ship.scn")!
+        
+        
         
         // create and add a camera to the scene
         let cameraNode = SCNNode()
@@ -63,8 +92,17 @@ class GameViewController: UIViewController {
         // add a tap gesture recognizer
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
         scnView.addGestureRecognizer(tapGesture)
+        
+        // remove the ship
+        removeShip()
+        
+        // get ship
+        ship =  getShip()
+        
+        // add ship
+        addShip()
     }
-    
+//    MARK: - Methods 2
     @objc
     func handleTap(_ gestureRecognize: UIGestureRecognizer) {
         // retrieve the SCNView
@@ -100,7 +138,7 @@ class GameViewController: UIViewController {
             SCNTransaction.commit()
         }
     }
-    
+//    MARK: - Prop 2
     override var shouldAutorotate: Bool {
         return true
     }
